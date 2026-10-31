@@ -1,1 +1,410 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vidyasetu - Agriculture Education Portal for Diploma, B.Sc. and M.Sc. Agriculture students.">
+<title>Vidyasetu | Agriculture Education Portal</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f7faf7;
+  color: #243329;
+  line-height: 1.6;
+}
+
+header {
+  background: #14532d;
+  color: white;
+  padding: 18px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: #a7f3d0;
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #a7f3d0;
+}
+
+.hero {
+  background: linear-gradient(120deg, #14532d, #15803d);
+  color: white;
+  text-align: center;
+  padding: 75px 20px;
+}
+
+.hero h1 {
+  font-size: clamp(30px, 6vw, 48px);
+  margin-bottom: 15px;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  font-size: 17px;
+  color: #e2f5e9;
+}
+
+.search-box {
+  margin: 25px auto 0;
+  max-width: 500px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 45px auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.section-title h2 {
+  font-size: 29px;
+  color: #14532d;
+}
+
+.section-title p {
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8e2;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 7px 20px rgba(0,0,0,0.09);
+}
+
+.card .icon {
+  font-size: 35px;
+}
+
+.card h3 {
+  margin: 12px 0 8px;
+  color: #14532d;
+}
+
+.card p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 18px;
+  background: #15803d;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn:hover {
+  background: #14532d;
+}
+
+.about {
+  background: #eaf5ed;
+  padding: 40px 25px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.about p {
+  max-width: 750px;
+  margin: 12px auto;
+  color: #52645a;
+}
+
+.notice {
+  background: white;
+  padding: 22px;
+  border-left: 5px solid #15803d;
+  border-radius: 8px;
+  margin-top: 25px;
+}
+
+footer {
+  background: #123b26;
+  color: white;
+  text-align: center;
+  padding: 30px 15px;
+}
+
+footer p {
+  font-size: 14px;
+  margin: 5px;
+}
+
+.empty {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+}
+
+@media(max-width: 600px) {
+  header {
+    justify-content: center;
+  }
+
+  nav {
+    justify-content: center;
+    gap: 13px;
+  }
+
+  .hero {
+    padding: 55px 15px;
+  }
+
+  .container {
+    margin: 32px auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Vidyasetu<span>.</span></div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#courses">Courses</a>
+    <a href="#subjects">Subjects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Welcome to Vidyasetu</h1>
+  <p>
+    Your Bridge to Agriculture Knowledge.
+    Learn, Explore and Grow with Quality
+    Agriculture Education Resources.
+  </p>
+
+  <div class="search-box">
+    <input type="search" id="search"
+    placeholder="Search agriculture subjects...">
+  </div>
+</section>
+
+<section class="container" id="courses">
+  <div class="section-title">
+    <h2>Our Courses</h2>
+    <p>Explore Agriculture Education</p>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="icon">🌱</div>
+      <h3>Diploma Agriculture</h3>
+      <p>Study materials and educational resources for Diploma students.</p>
+      <a href="#subjects" class="btn">Explore</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🎓</div>
+      <h3>B.Sc. Agriculture</h3>
+      <p>Subject-wise notes, practicals and learning resources.</p>
+      <a href="#subjects" class="btn">Explore</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">📚</div>
+      <h3>M.Sc. Agriculture</h3>
+      <p>Advanced agriculture learning and research resources.</p>
+      <a href="#subjects" class="btn">Explore</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="container" id="subjects">
+  <div class="section-title">
+    <h2>Agriculture Subjects</h2>
+    <p>Explore different branches of Agriculture</p>
+  </div>
+
+  <div class="grid" id="subjectGrid">
+
+    <div class="card">
+      <div class="icon">🌾</div>
+      <h3>Agronomy</h3>
+      <p>Crop production, field management and farming practices.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🐛</div>
+      <h3>Agricultural Entomology</h3>
+      <p>Insect pests, identification and their management.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🍃</div>
+      <h3>Plant Pathology</h3>
+      <p>Plant diseases, symptoms and disease management.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧪</div>
+      <h3>Soil Science</h3>
+      <p>Soil properties, fertility and nutrient management.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🌻</div>
+      <h3>Horticulture</h3>
+      <p>Fruits, vegetables, flowers and their cultivation.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧬</div>
+      <h3>Plant Breeding</h3>
+      <p>Crop improvement, genetics and breeding methods.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">📊</div>
+      <h3>Agricultural Economics</h3>
+      <p>Farm management, marketing and agricultural economics.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">👨‍🌾</div>
+      <h3>Agricultural Extension</h3>
+      <p>Farmer education, communication and rural development.</p>
+      <a href="#" class="btn">Study Material</a>
+    </div>
+
+  </div>
+
+  <p class="empty" id="noResults">No subjects found.</p>
+</section>
+
+<section class="container" id="about">
+  <div class="about">
+    <h2>About Vidyasetu</h2>
+    <p>
+      Vidyasetu is an Agriculture Education Portal
+      designed to help Diploma, B.Sc. and M.Sc.
+      Agriculture students access educational
+      information and study resources.
+    </p>
+    <p>
+      Our mission is to make agriculture education
+      simple, accessible and useful for everyone.
+    </p>
+  </div>
+</section>
+
+<section class="container" id="contact">
+  <div class="section-title">
+    <h2>Contact Us</h2>
+    <p>Connect with Vidyasetu</p>
+  </div>
+
+  <div class="notice">
+    <h3>Vidyasetu Agriculture Education Portal</h3>
+    <p>Email: Add your official email address here.</p>
+    <p>Website: Vidyasetu</p>
+  </div>
+</section>
+
+<footer>
+  <h2>Vidyasetu.</h2>
+  <p>Your Bridge to Agriculture Knowledge</p>
+  <p>© 2026 Vidyasetu. All Rights Reserved.</p>
+</footer>
+
+<script>
+const search = document.getElementById("search");
+const cards = document.querySelectorAll("#subjectGrid .card");
+const noResults = document.getElementById("noResults");
+
+search.addEventListener("input", function() {
+  const value = this.value.toLowerCase();
+  let count = 0;
+
+  cards.forEach(card => {
+    const match = card.innerText.toLowerCase().includes(value);
+    card.style.display = match ? "" : "none";
+    if(match) count++;
+  });
+
+  noResults.style.display = count === 0 ? "block" : "none";
+});
+</script>
+
+</body>
+</html>
