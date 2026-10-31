@@ -238,6 +238,47 @@ footer p {
 </header>
 
 <section class="hero" id="home">
+  
+<section class="container" id="login">
+  <div class="section-title">
+    <h2>Student Login / Registration</h2>
+    <p>Join Vidyasetu Agriculture Education Portal</p>
+  </div>
+
+  <div class="card" style="max-width:450px;margin:auto;">
+    <h3 id="authTitle">Student Registration</h3>
+
+    <input id="studentName" type="text"
+      placeholder="Full Name"
+      style="width:100%;padding:12px;margin:10px 0;">
+
+    <input id="studentEmail" type="email"
+      placeholder="Email Address"
+      style="width:100%;padding:12px;margin:10px 0;">
+
+    <input id="studentPassword" type="password"
+      placeholder="Password (minimum 6 characters)"
+      style="width:100%;padding:12px;margin:10px 0;">
+
+    <button class="btn" id="authButton" type="button">
+      Register
+    </button>
+
+    <button class="btn" id="switchAuth" type="button">
+      Already have an account? Login
+    </button>
+
+    <p id="authMessage" style="margin-top:15px;"></p>
+
+    <div id="userPanel" hidden>
+      <h3 id="welcomeUser"></h3>
+      <button class="btn" id="logoutButton" type="button">
+        Logout
+      </button>
+    </div>
+  </div>
+</section>
+  
   <h1>Welcome to Vidyasetu</h1>
   <p>
     Your Bridge to Agriculture Knowledge.
@@ -393,8 +434,33 @@ footer p {
      Admin Login
   </a>
 </footer>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-<script>
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDE6FRAN5F9KCU0QfPyzUeEMn3LuxIXhj0",
+  authDomain: "vidyasetu-b4de2.firebaseapp.com",
+  projectId: "vidyasetu-b4de2",
+  storageBucket: "vidyasetu-b4de2.firebasestorage.app",
+  messagingSenderId: "451136037814",
+  appId: "1:451136037814:web:9c0a83fff8558cf7075717"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Search functionality
 const search = document.getElementById("search");
 const cards = document.querySelectorAll("#subjectGrid .card");
 const noResults = document.getElementById("noResults");
@@ -406,12 +472,108 @@ search.addEventListener("input", function() {
   cards.forEach(card => {
     const match = card.innerText.toLowerCase().includes(value);
     card.style.display = match ? "" : "none";
-    if(match) count++;
+    if (match) count++;
   });
 
   noResults.style.display = count === 0 ? "block" : "none";
 });
-</script>
 
+// Authentication
+let isRegister = true;
+
+const nameInput = document.getElementById("studentName");
+const emailInput = document.getElementById("studentEmail");
+const passwordInput = document.getElementById("studentPassword");
+
+const authButton = document.getElementById("authButton");
+const switchAuth = document.getElementById("switchAuth");
+const message = document.getElementById("authMessage");
+const userPanel = document.getElementById("userPanel");
+
+switchAuth.addEventListener("click", () => {
+  isRegister = !isRegister;
+
+  document.getElementById("authTitle").textContent =
+    isRegister ? "Student Registration" : "Student Login";
+
+  authButton.textContent = isRegister ? "Register" : "Login";
+
+  switchAuth.textContent = isRegister
+    ? "Already have an account? Login"
+    : "New student? Register";
+
+  nameInput.hidden = !isRegister;
+  message.textContent = "";
+});
+
+authButton.addEventListener("click", async () => {
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password || (isRegister && !name)) {
+    message.textContent = "Please fill all required fields.";
+    return;
+  }
+
+  authButton.disabled = true;
+  message.textContent = "Please wait...";
+
+  try {
+    if (isRegister) {
+      const result = await createUserWithEmailAndPassword(
+        auth, email, password
+      );
+
+      await updateProfile(result.user, {
+        displayName: name
+      });
+
+      message.textContent = "Registration successful!";
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      message.textContent = "Login successful!";
+    }
+
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    authButton.disabled = false;
+  }
+});
+
+// Login state
+onAuthStateChanged(auth, user => {
+  if (user) {
+    userPanel.hidden = false;
+    document.getElementById("welcomeUser").textContent =
+      "Welcome, " + (user.displayName || user.email);
+
+    authButton.hidden = true;
+    switchAuth.hidden = true;
+    nameInput.hidden = true;
+    emailInput.hidden = true;
+    passwordInput.hidden = true;
+  } else {
+    userPanel.hidden = true;
+    authButton.hidden = false;
+    switchAuth.hidden = false;
+    nameInput.hidden = !isRegister;
+    emailInput.hidden = false;
+    passwordInput.hidden = false;
+  }
+});
+
+// Logout
+document.getElementById("logoutButton").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    message.textContent = "Logged out successfully.";
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+</script>
 </body>
 </html>
+
