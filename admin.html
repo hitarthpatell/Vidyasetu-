@@ -1,427 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vidyasetu Admin Dashboard</title>
-
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f1f5f2;
-  color:#243329;
-}
-header{
-  background:#14532d;
-  color:white;
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.container{
-  max-width:900px;
-  margin:30px auto;
-  padding:15px;
-}
-.card{
-  background:white;
-  padding:22px;
-  border-radius:12px;
-  margin-bottom:20px;
-  box-shadow:0 2px 10px #0001;
-}
-input,textarea,select{
-  width:100%;
-  padding:13px;
-  margin:8px 0;
-  border:1px solid #ccc;
-  border-radius:6px;
-  font-size:15px;
-}
-button{
-  background:#15803d;
-  color:white;
-  padding:12px 18px;
-  border:0;
-  border-radius:6px;
-  margin:5px;
-  cursor:pointer;
-}
-.delete{background:#dc2626}
-.edit{background:#2563eb}
-.hidden{display:none}
-.item{
-  border:1px solid #ddd;
-  padding:15px;
-  border-radius:8px;
-  margin:12px 0;
-  overflow-wrap:anywhere;
-}
+:root{--green:#14532d;--accent:#15803d;--bg:#f3f7f4;--ink:#243329}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}header{background:var(--green);color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}header h1{font-size:23px;margin:0}.wrap{max-width:1050px;margin:25px auto;padding:0 15px}.panel{background:white;border:1px solid #dce7df;border-radius:12px;padding:20px;margin:15px 0;box-shadow:0 3px 12px #00000008}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button,.btn{border:0;background:var(--accent);color:white;padding:11px 15px;border-radius:7px;cursor:pointer;font-size:14px}.tabs button.active{background:var(--green)}button.secondary{background:#64748b}.danger{background:#b91c1c}.field{margin:12px 0}.field label{display:block;font-weight:bold;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:11px;border:1px solid #b8c8bd;border-radius:7px;font:inherit}.field textarea{min-height:90px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.item{border:1px solid #dce7df;border-radius:8px;padding:12px;margin:10px 0;display:flex;justify-content:space-between;gap:10px;align-items:center}.item small{display:block;color:#64748b}.hidden{display:none!important}.msg{margin:10px 0;color:#14532d;white-space:pre-wrap}.muted{color:#64748b;font-size:13px}.actions{display:flex;gap:7px;flex-wrap:wrap}@media(max-width:600px){.row{grid-template-columns:1fr}.item{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
-
 <body>
-
-<header>
-  <h2>🌱 Vidyasetu Admin</h2>
-  <button id="logout">Logout</button>
-</header>
-
-<div class="container">
-
-  <div class="card" id="loginBox">
-    <h2>Admin Login</h2>
-    <input id="email" type="email" placeholder="Admin Email">
-    <input id="password" type="password" placeholder="Password">
-    <button id="login">Login</button>
-    <p id="loginMessage"></p>
-  </div>
-
-  <div id="dashboard" class="hidden">
-
-    <div class="card">
-      <h2>Welcome to Admin Dashboard</h2>
-      <p>Manage Vidyasetu educational resources.</p>
-    </div>
-
-    <div class="card">
-      <h2>Add / Edit Study Material</h2>
-
-      <input id="title" placeholder="Material Title">
-
-      <select id="course">
-        <option value="">Select Course</option>
-        <option>Diploma Agriculture</option>
-        <option>B.Sc. Agriculture</option>
-        <option>M.Sc. Agriculture</option>
-      </select>
-
-      <select id="subject">
-        <option value="">Select Subject</option>
-        <option>Agronomy</option>
-        <option>Agricultural Entomology</option>
-        <option>Plant Pathology</option>
-        <option>Soil Science</option>
-        <option>Horticulture</option>
-        <option>Plant Breeding</option>
-        <option>Agricultural Economics</option>
-        <option>Agricultural Extension</option>
-      </select>
-
-      <textarea id="description"
-        placeholder="Description"></textarea>
-
-      <input id="pdfUrl"
-        type="url"
-        placeholder="PDF / Study Material URL">
-
-      <button id="save">Add Material</button>
-      <button id="cancelEdit" class="hidden">Cancel Edit</button>
-
-      <p id="status"></p>
-    </div>
-
-    <div class="card">
-      <h2>Manage Study Materials</h2>
-      <div id="materials">Loading...</div>
-    </div>
-
-    <div class="card">
-      <h2>Manage Notices</h2>
-      <input id="noticeTitle" placeholder="Notice Title">
-      <textarea id="noticeText"
-        placeholder="Notice Details"></textarea>
-      <button id="addNotice">Publish Notice</button>
-      <div id="notices"></div>
-    </div>
-
-  </div>
+<header><h1>Vidyasetu. Admin Dashboard</h1><button id="logout" class="btn secondary hidden">Logout</button></header>
+<div class="wrap">
+<section id="loginBox" class="panel">
+<h2>Admin Login</h2><p class="muted">Sign in using the authorized administrator account.</p>
+<div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="username"></div>
+<div class="field"><label>Password</label><input id="loginPassword" type="password" autocomplete="current-password"></div>
+<button id="loginBtn" class="btn">Login</button><p id="loginMsg" class="msg"></p>
+</section>
+<section id="dashboard" class="hidden">
+<div class="panel"><h2 id="adminWelcome">Dashboard</h2><p class="muted">Changes saved here are published to the public website through Firebase.</p>
+<div class="tabs"><button class="active" data-tab="site">Homepage & Design</button><button data-tab="courses">Courses</button><button data-tab="subjects">Subjects</button><button data-tab="materials">Study Materials / PDFs</button></div></div>
+<div id="siteTab" class="panel tabPanel">
+<h2>Homepage & Design</h2>
+<div class="row"><div class="field"><label>Website name</label><input id="siteName"></div><div class="field"><label>Contact email</label><input id="contactEmail" type="email"></div></div>
+<div class="field"><label>Homepage heading</label><input id="heroTitle"></div><div class="field"><label>Homepage description</label><textarea id="heroText"></textarea></div>
+<div class="field"><label>About section heading</label><input id="aboutTitle"></div><div class="field"><label>About section text</label><textarea id="aboutText"></textarea></div>
+<div class="row"><div class="field"><label>Primary button / accent color</label><input id="primaryColor" type="color" value="#15803d"></div><div class="field"><label>Header / hero background color</label><input id="heroColor" type="color" value="#14532d"></div></div>
+<button id="saveSite" class="btn">Save Homepage Settings</button><p id="siteMsg" class="msg"></p>
 </div>
-
+<div id="coursesTab" class="panel tabPanel hidden"><h2>Manage Courses</h2><input id="courseId" type="hidden"><div class="field"><label>Course name</label><input id="courseName" placeholder="e.g. B.Sc. Agriculture"></div><div class="field"><label>Description</label><textarea id="courseDescription"></textarea></div><div class="actions"><button id="saveCourse" class="btn">Save Course</button><button id="clearCourse" class="btn secondary">Clear</button></div><p id="courseMsg" class="msg"></p><h3>Existing Courses</h3><div id="courseList"></div></div>
+<div id="subjectsTab" class="panel tabPanel hidden"><h2>Manage Subjects</h2><input id="subjectId" type="hidden"><div class="field"><label>Subject name</label><input id="subjectName" placeholder="e.g. Agronomy"></div><div class="field"><label>Description</label><textarea id="subjectDescription"></textarea></div><div class="actions"><button id="saveSubject" class="btn">Save Subject</button><button id="clearSubject" class="btn secondary">Clear</button></div><p id="subjectMsg" class="msg"></p><h3>Existing Subjects</h3><div id="subjectList"></div></div>
+<div id="materialsTab" class="panel tabPanel hidden"><h2>Upload Study Material</h2><input id="materialId" type="hidden"><div class="field"><label>Title</label><input id="materialTitle" placeholder="e.g. Principles of Agronomy Notes"></div><div class="row"><div class="field"><label>Course</label><input id="materialCourse" placeholder="e.g. Diploma / B.Sc. Agriculture"></div><div class="field"><label>Subject</label><input id="materialSubject" placeholder="e.g. Agronomy"></div></div><div class="field"><label>Description</label><textarea id="materialDescription"></textarea></div><div class="field"><label>PDF file (select a file when adding or replacing)</label><input id="materialFile" type="file" accept="application/pdf"></div><div class="actions"><button id="saveMaterial" class="btn">Save / Upload Material</button><button id="clearMaterial" class="btn secondary">Clear</button></div><p id="materialMsg" class="msg"></p><h3>Published Materials</h3><div id="materialList"></div></div>
+</section>
+</div>
 <script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js';
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-import {
- getAuth,
- signInWithEmailAndPassword,
- signOut,
- onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-import {
- getFirestore,
- collection,
- addDoc,
- getDoc,
- doc,
- updateDoc,
- deleteDoc,
- onSnapshot,
- serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
+// Must match the administrator email in firestore.rules and storage.rules.
+const ADMIN_EMAIL = 'hitarthpatel111111@gmail.com';
 const firebaseConfig = {
- apiKey:"AIzaSyDE6FRAN5F9KCU0QfPyzUeEMn3LuxIXhj0",
- authDomain:"vidyasetu-b4de2.firebaseapp.com",
- projectId:"vidyasetu-b4de2",
- storageBucket:"vidyasetu-b4de2.firebasestorage.app",
- messagingSenderId:"451136037814",
- appId:"1:451136037814:web:9c0a83fff8558cf7075717"
+  apiKey: 'AIzaSyDE6FRAN5F9KCU0QfPyzUeEMn3LuxIXhj0',
+  authDomain: 'vidyasetu-b4de2.firebaseapp.com',
+  projectId: 'vidyasetu-b4de2',
+  storageBucket: 'vidyasetu-b4de2.firebasestorage.app',
+  messagingSenderId: '451136037814',
+  appId: '1:451136037814:web:9c0a83fff8558cf7075717'
 };
-
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-
+const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);
 const $=id=>document.getElementById(id);
+const show=(id,yes)=>$(id).classList.toggle('hidden',!yes);
+const say=(id,msg)=>$(id).textContent=msg;
+let signedInAdmin=null;
 
-let editingId=null;
-let unsubscribe=null;
-
-$("login").onclick=async()=>{
- try{
-  $("loginMessage").textContent="Please wait...";
-  await signInWithEmailAndPassword(
-   auth,$("email").value.trim(),$("password").value
-  );
- }catch(e){
-  $("loginMessage").textContent=e.message;
- }
-};
-
-onAuthStateChanged(auth,async user=>{
- if(unsubscribe){
-  unsubscribe();
-  unsubscribe=null;
- }
-
- $("dashboard").classList.add("hidden");
- $("loginBox").classList.remove("hidden");
-
- if(!user)return;
-
- try{
-  const adminDoc=await getDoc(
-   doc(db,"admins",user.uid)
-  );
-
-  if(!adminDoc.exists() ||
-     adminDoc.data().role!=="admin"){
-   $("loginMessage").textContent=
-    "Access denied. Admin account required.";
-   await signOut(auth);
-   return;
-  }
-
-  $("loginBox").classList.add("hidden");
-  $("dashboard").classList.remove("hidden");
-
-  loadMaterials();
-  loadNotices();
-
- }catch(e){
-  $("loginMessage").textContent=e.message;
-  await signOut(auth);
- }
-});
-
-$("logout").onclick=()=>signOut(auth);
-
-function loadMaterials(){
- unsubscribe=onSnapshot(
-  collection(db,"materials"),
-  snapshot=>{
-   $("materials").innerHTML="";
-
-   snapshot.forEach(d=>{
-    const m=d.data();
-
-    const div=document.createElement("div");
-    div.className="item";
-
-    const heading=document.createElement("h3");
-    heading.textContent=m.title||"Untitled";
-
-    const details=document.createElement("p");
-    details.textContent=
-     (m.course||"")+" | "+(m.subject||"");
-
-    const description=document.createElement("p");
-    description.textContent=m.description||"";
-
-    const edit=document.createElement("button");
-    edit.className="edit";
-    edit.textContent="Edit";
-    edit.onclick=()=>editMaterial(d.id,m);
-
-    const del=document.createElement("button");
-    del.className="delete";
-    del.textContent="Delete";
-    del.onclick=()=>removeMaterial(d.id);
-
-    div.append(heading,details,description,edit,del);
-
-    if(m.pdfUrl){
-     const link=document.createElement("a");
-     link.href=m.pdfUrl;
-     link.target="_blank";
-     link.rel="noopener noreferrer";
-     link.textContent="Open Study Material";
-     div.append(link);
-    }
-
-    $("materials").append(div);
-   });
-  },
-  error=>{$("status").textContent=error.message;}
- );
-}
-
-async function saveMaterial(){
- const title=$("title").value.trim();
- const course=$("course").value;
- const subject=$("subject").value;
- const description=$("description").value.trim();
- const pdfUrl=$("pdfUrl").value.trim();
-
- if(!title||!course||!subject){
-  $("status").textContent="Fill all required fields.";
-  return;
- }
-
- if(pdfUrl){
-  try{
-   const url=new URL(pdfUrl);
-   if(url.protocol!=="https:"){
-    throw new Error();
-   }
-  }catch{
-   $("status").textContent="Enter a valid HTTPS URL.";
-   return;
-  }
- }
-
- $("save").disabled=true;
-
- try{
-  const data={
-   title,course,subject,description,pdfUrl,
-   updatedAt:serverTimestamp()
-  };
-
-  if(editingId){
-   await updateDoc(
-    doc(db,"materials",editingId),data
-   );
+onAuthStateChanged(auth, async user=>{
+  if(user && user.email===ADMIN_EMAIL){
+    signedInAdmin=user; show('loginBox',false); show('dashboard',true); show('logout',true);
+    $('adminWelcome').textContent='Welcome, '+(user.displayName||user.email);
+    await Promise.all([loadSite(),loadCourses(),loadSubjects(),loadMaterials()]);
   }else{
-   await addDoc(collection(db,"materials"),{
-    ...data,
-    createdAt:serverTimestamp()
-   });
+    signedInAdmin=null; show('dashboard',false); show('logout',false); show('loginBox',true);
+    if(user){await signOut(auth);say('loginMsg','This account is not authorized as admin, or its email is not verified.');}
   }
+});
+$('loginBtn').onclick=async()=>{try{say('loginMsg','Signing in...');await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value); }catch(e){say('loginMsg',friendly(e));}};
+$('logout').onclick=()=>signOut(auth);
+function friendly(e){return e.code==='permission-denied'?'Permission denied. Check Firebase Rules and admin email.':e.message;}
+function requireAdmin(){if(!signedInAdmin)throw new Error('Admin login required.');}
 
-  resetForm();
-  $("status").textContent="Saved successfully!";
+// Tabs
+for(const b of document.querySelectorAll('[data-tab]')) b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabPanel').forEach(x=>x.classList.add('hidden'));show(b.dataset.tab+'Tab',true);};
 
- }catch(e){
-  $("status").textContent=e.message;
- }finally{
-  $("save").disabled=false;
- }
-}
+async function loadSite(){const snap=await getDoc(doc(db,'site','settings'));const d=snap.exists()?snap.data():{};for(const [id,key,def] of [['siteName','siteName','Vidyasetu.'],['contactEmail','contactEmail',''],['heroTitle','heroTitle','Welcome to Vidyasetu'],['heroText','heroText','Your Bridge to Agriculture Knowledge.'],['aboutTitle','aboutTitle','About Vidyasetu'],['aboutText','aboutText','Agriculture Education Portal'],['primaryColor','primaryColor','#15803d'],['heroColor','heroColor','#14532d']])$(id).value=d[key]||def;}
+$('saveSite').onclick=async()=>{try{requireAdmin();await setDoc(doc(db,'site','settings'),{siteName:$('siteName').value.trim(),contactEmail:$('contactEmail').value.trim(),heroTitle:$('heroTitle').value.trim(),heroText:$('heroText').value.trim(),aboutTitle:$('aboutTitle').value.trim(),aboutText:$('aboutText').value.trim(),primaryColor:$('primaryColor').value,heroColor:$('heroColor').value,updatedAt:serverTimestamp()},{merge:true});say('siteMsg','Homepage settings saved. Refresh the public website to see changes.');}catch(e){say('siteMsg',friendly(e));}};
 
-function editMaterial(id,m){
- editingId=id;
- $("title").value=m.title||"";
- $("course").value=m.course||"";
- $("subject").value=m.subject||"";
- $("description").value=m.description||"";
- $("pdfUrl").value=m.pdfUrl||"";
- $("save").textContent="Update Material";
- $("cancelEdit").classList.remove("hidden");
- window.scrollTo({top:0,behavior:"smooth"});
-}
+function itemRow(container,id,title,sub,onEdit,onDelete){const div=document.createElement('div');div.className='item';const info=document.createElement('div');const strong=document.createElement('strong');strong.textContent=title||'(Untitled)';const small=document.createElement('small');small.textContent=sub||'';info.append(strong,small);const actions=document.createElement('div');actions.className='actions';const edit=document.createElement('button');edit.className='btn secondary';edit.textContent='Edit';edit.onclick=onEdit;const del=document.createElement('button');del.className='btn danger';del.textContent='Delete';del.onclick=onDelete;actions.append(edit,del);div.append(info,actions);$(container).append(div);}
+async function loadCollection(name,container,handler){const snap=await getDocs(collection(db,name));$(container).replaceChildren();snap.forEach(s=>handler(s.id,s.data()));}
+async function loadCourses(){await loadCollection('courses','courseList',(id,d)=>itemRow('courseList',id,d.name,d.description,()=>{ $('courseId').value=id;$('courseName').value=d.name||'';$('courseDescription').value=d.description||'';},()=>removeDoc('courses',id,loadCourses)));}
+async function loadSubjects(){await loadCollection('subjects','subjectList',(id,d)=>itemRow('subjectList',id,d.name,d.description,()=>{$('subjectId').value=id;$('subjectName').value=d.name||'';$('subjectDescription').value=d.description||'';},()=>removeDoc('subjects',id,loadSubjects)));}
+async function removeDoc(col,id,reload){if(!confirm('Delete this item?'))return;try{requireAdmin();await deleteDoc(doc(db,col,id));await reload();}catch(e){alert(friendly(e));}}
+$('saveCourse').onclick=async()=>{try{requireAdmin();const data={name:$('courseName').value.trim(),description:$('courseDescription').value.trim(),updatedAt:serverTimestamp()};if(!data.name)throw Error('Enter course name.');const id=$('courseId').value;if(id)await updateDoc(doc(db,'courses',id),data);else await addDoc(collection(db,'courses'),{...data,createdAt:serverTimestamp()});$('clearCourse').click();say('courseMsg','Course saved.');await loadCourses();}catch(e){say('courseMsg',friendly(e));}};
+$('clearCourse').onclick=()=>{$('courseId').value='';$('courseName').value='';$('courseDescription').value='';};
+$('saveSubject').onclick=async()=>{try{requireAdmin();const data={name:$('subjectName').value.trim(),description:$('subjectDescription').value.trim(),updatedAt:serverTimestamp()};if(!data.name)throw Error('Enter subject name.');const id=$('subjectId').value;if(id)await updateDoc(doc(db,'subjects',id),data);else await addDoc(collection(db,'subjects'),{...data,createdAt:serverTimestamp()});$('clearSubject').click();say('subjectMsg','Subject saved.');await loadSubjects();}catch(e){say('subjectMsg',friendly(e));}};
+$('clearSubject').onclick=()=>{$('subjectId').value='';$('subjectName').value='';$('subjectDescription').value='';};
 
-async function removeMaterial(id){
- if(!confirm("Delete this material?"))return;
-
- try{
-  await deleteDoc(doc(db,"materials",id));
- }catch(e){
-  alert(e.message);
- }
-}
-
-function resetForm(){
- editingId=null;
- ["title","course","subject","description","pdfUrl"]
- .forEach(id=>$(id).value="");
-
- $("save").textContent="Add Material";
- $("cancelEdit").classList.add("hidden");
-}
-
-$("save").onclick=saveMaterial;
-$("cancelEdit").onclick=resetForm;
-
-async function loadNotices(){
- onSnapshot(collection(db,"notices"),snapshot=>{
-  $("notices").innerHTML="";
-
-  snapshot.forEach(d=>{
-   const div=document.createElement("div");
-   div.className="item";
-
-   const h=document.createElement("h3");
-   h.textContent=d.data().title||"";
-
-   const p=document.createElement("p");
-   p.textContent=d.data().text||"";
-
-   const del=document.createElement("button");
-   del.className="delete";
-   del.textContent="Delete";
-   del.onclick=async()=>{
-    if(confirm("Delete this notice?")){
-     await deleteDoc(doc(db,"notices",d.id));
-    }
-   };
-
-   div.append(h,p,del);
-   $("notices").append(div);
-  });
- });
-}
-
-$("addNotice").onclick=async()=>{
- const title=$("noticeTitle").value.trim();
- const text=$("noticeText").value.trim();
-
- if(!title||!text){
-  alert("Enter notice details.");
-  return;
- }
-
- try{
-  await addDoc(collection(db,"notices"),{
-   title,text,
-   createdAt:serverTimestamp()
-  });
-
-  $("noticeTitle").value="";
-  $("noticeText").value="";
-  alert("Notice published!");
- }catch(e){
-  alert(e.message);
- }
-};
-
+async function loadMaterials(){await loadCollection('materials','materialList',(id,d)=>itemRow('materialList',id,d.title,(d.course||'')+' • '+(d.subject||''),()=>{$('materialId').value=id;$('materialTitle').value=d.title||'';$('materialCourse').value=d.course||'';$('materialSubject').value=d.subject||'';$('materialDescription').value=d.description||'';},()=>removeMaterial(id,d)));}
+async function removeMaterial(id,d){if(!confirm('Delete this study material?'))return;try{requireAdmin();await deleteDoc(doc(db,'materials',id));if(d.storagePath){try{await deleteObject(ref(storage,d.storagePath));}catch(e){console.warn(e);}}await loadMaterials();}catch(e){alert(friendly(e));}}
+$('saveMaterial').onclick=async()=>{try{requireAdmin();const title=$('materialTitle').value.trim();if(!title)throw Error('Enter material title.');const id=$('materialId').value;const file=$('materialFile').files[0];let old={};if(id){const oldSnap=await getDoc(doc(db,'materials',id));if(oldSnap.exists())old=oldSnap.data();}let fileURL=old.fileURL||'',storagePath=old.storagePath||'';
+if(file){if(file.type!=='application/pdf')throw Error('Only PDF files are accepted.');if(file.size>20*1024*1024)throw Error('PDF must be 20 MB or smaller.');const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');storagePath='materials/'+Date.now()+'_'+safeName;const fileRef=ref(storage,storagePath);await uploadBytes(fileRef,file,{contentType:'application/pdf'});fileURL=await getDownloadURL(fileRef);if(old.storagePath){try{await deleteObject(ref(storage,old.storagePath));}catch(e){console.warn(e);}}}
+if(!fileURL)throw Error('Select a PDF file before saving a new material.');const data={title,course:$('materialCourse').value.trim(),subject:$('materialSubject').value.trim(),description:$('materialDescription').value.trim(),fileURL,storagePath,updatedAt:serverTimestamp()};if(id)await updateDoc(doc(db,'materials',id),data);else await addDoc(collection(db,'materials'),{...data,createdAt:serverTimestamp()});$('clearMaterial').click();say('materialMsg','Study material published.');await loadMaterials();}catch(e){say('materialMsg',friendly(e));}};
+$('clearMaterial').onclick=()=>{$('materialId').value='';$('materialTitle').value='';$('materialCourse').value='';$('materialSubject').value='';$('materialDescription').value='';$('materialFile').value='';};
 </script>
-</body>
-</html>
+</body></html>
